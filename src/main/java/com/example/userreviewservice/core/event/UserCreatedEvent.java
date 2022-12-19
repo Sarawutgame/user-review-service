@@ -1,10 +1,11 @@
-package com.example.userreviewservice.rest;
+package com.example.userreviewservice.core.event;
 
 import lombok.Data;
 
 @Data
-public class CreateUserModel {
+public class UserCreatedEvent {
 
+    private String _id;
     private String username;
     private String name;
     private String email;
