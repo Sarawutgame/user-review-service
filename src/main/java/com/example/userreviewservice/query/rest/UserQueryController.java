@@ -1,6 +1,7 @@
 package com.example.userreviewservice.query.rest;
 
 import com.example.userreviewservice.core.UserEntity;
+import com.example.userreviewservice.query.FindUserByEmailQuery;
 import com.example.userreviewservice.query.FindUserByIdQuery;
 import com.example.userreviewservice.query.FindUsersQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -37,5 +38,12 @@ public class UserQueryController {
         }
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/findByEmail")
+    public List<UserRestModel> getUserByEmail(@RequestParam String email){
+        List<UserRestModel> users = queryGateway
+                .query(new FindUserByEmailQuery(email), ResponseTypes.multipleInstancesOf(UserRestModel.class)).join();
+        return users;
     }
 }

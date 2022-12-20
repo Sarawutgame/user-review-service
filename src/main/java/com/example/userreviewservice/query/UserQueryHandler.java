@@ -35,4 +35,17 @@ public class UserQueryHandler {
         UserEntity user = userRepository.findByUserId(query.get_id());
         return user;
     }
+
+    @QueryHandler
+    List<UserRestModel> handle(FindUserByEmailQuery query){
+        List<UserRestModel> userRest = new ArrayList<>();
+        List<UserEntity> storedUsers = userRepository
+                .findByUserEmail(query.getEmail());
+        for (UserEntity userEntity : storedUsers){
+            UserRestModel userRestModel = new UserRestModel();
+            BeanUtils.copyProperties(userEntity, userRestModel);
+            userRest.add(userRestModel);
+        }
+        return userRest;
+    }
 }
